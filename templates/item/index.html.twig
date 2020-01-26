@@ -23,11 +23,11 @@
         <table class="table">
             <thead>
             <tr>
-                <th> #</th>
-                <th> Name</th>
-                <th> Quantity</th>
-                <th> Description</th>
-                <th> Actions</th>
+                <th>#</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Description</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -35,14 +35,12 @@
                 <tr>
                     <td> {{ loop.index }} </td>
                     <td> {{ item.name }} </td>
-                    <td> {{ item.name }} </td>
-                    <td> {{ item.name }} </td>
+                    <td> {{ item.quantity }} </td>
+                    <td> {{ item.description }} </td>
                     <td>
-                        <form
-                                method="POST"
-                                action="{{ path('item.delete', {'id': item.id}) }}">
+                        <form method="POST" action="{{ path('item.delete', {'id': item.id}) }}">
                             <button class="btn btn-outline-danger">
-                                Delete
+                                {{ 'Delete' | trans }}
                                 <i class="fas fa-trash  "></i>
                             </button>
                         </form>
