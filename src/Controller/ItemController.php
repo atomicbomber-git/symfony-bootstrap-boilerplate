@@ -45,12 +45,36 @@ class ItemController extends AbstractController
     }
 
     /**
+     * @Route("/item/edit/{id}", name="item.edit", methods={"GET", "POST"})
+     */
+    public function edit(Item $item, Request $request, TranslatorInterface $translator)
+    {
+        $form = $this->createForm(ItemType::class, $item)
+            ->handleRequest($request);
+
+        if ($form->isSubmitted() and $form->isValid()) {
+            $entity = $this->getDoctrine()->getManager();
+            $entity->persist($item);
+            $entity->flush();
+
+            $this->addFlash('notice', $translator->trans("Data successfully updated."));
+            return $this->redirectToRoute("item.edit", [
+                "id" => $item->getId()
+            ]);
+        }
+
+        return $this->render("item/create.html.twig", [
+            "form" => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/item/delete/{id}", name="item.delete", methods={"POST"})
      */
-    public function delete(int $id, ItemRepository $itemRepository, TranslatorInterface $translator)
+    public function delete(Item $item, TranslatorInterface $translator)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($itemRepository->find($id));
+        $entityManager->remove($item);
         $entityManager->flush();
 
         $this->addFlash("notice", $translator->trans("Data successfully deleted."));

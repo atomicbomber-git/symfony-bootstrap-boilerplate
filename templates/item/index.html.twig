@@ -13,12 +13,7 @@
             </a>
         </div>
 
-        {% for message in app.flashes('notice') %}
-            <div class="alert alert-info" role="alert">
-                <i class="fas fa-info"></i>
-                {{ message }}
-            </div>
-        {% endfor %}
+        {% include "shared/_notice.html.twig" %}
 
         <table class="table">
             <thead>
@@ -39,8 +34,13 @@
                     <td> {{ item.description }} </td>
                     <td>
                         <form method="POST" action="{{ path('item.delete', {'id': item.id}) }}">
+                            <a class="btn btn-outline-info" href="{{ path('item.edit', {'id': item.id}) }}">
+                                {{ 'Edit'|trans }}
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+
                             <button class="btn btn-outline-danger">
-                                {{ 'Delete' | trans }}
+                                {{ 'Delete'|trans }}
                                 <i class="fas fa-trash  "></i>
                             </button>
                         </form>
