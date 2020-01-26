@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {% trans %} Item Index {% endtrans %} {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1> {% trans %} Item Index {% endtrans %} </h1>
+
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-primary" href="{{ path('item.create') }}">
+                Add New Item
+                <i class="fas fa-plus "></i>
+            </a>
+        </div>
+
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-info" role="alert">
+                <i class="fas fa-info"></i>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th> #</th>
+                <th> Name</th>
+                <th> Quantity</th>
+                <th> Description</th>
+                <th> Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr>
+                    <td> {{ loop.index }} </td>
+                    <td> {{ item.name }} </td>
+                    <td> {{ item.name }} </td>
+                    <td> {{ item.name }} </td>
+                    <td>
+                        <form
+                                method="POST"
+                                action="{{ path('item.delete', {'id': item.id}) }}">
+                            <button class="btn btn-outline-danger">
+                                Delete
+                                <i class="fas fa-trash  "></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
